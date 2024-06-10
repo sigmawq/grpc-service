@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = "module github.sigmawq/grpc-service/grpc";
+
+package grpc;
+
+service Grpc {
+  rpc SendBatch (Batch) returns (BatchResponse) {}
+}
+
+message Data {
+    string Id = 1;
+    string Subcategory = 2;
+    string TitleRo = 3;
+    string TitleRu = 4;
+    string Type = 5;
+    double Posted = 6;
+}
+
+message Batch {
+  repeated Data data = 1;
+}
+
+message BatchResponse {}
