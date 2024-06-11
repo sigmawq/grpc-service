@@ -100,7 +100,7 @@ func (database *Database) allowAggregationOnSubcategoryField() error {
 
 	if resp.IsError() {
 		log.Printf("Failed to define database mapping: %v", resp)
-		return errors.New("Failed to define database mapping")
+		return errors.New("failed to define database mapping")
 	}
 
 	return nil
@@ -124,10 +124,14 @@ func (database *Database) UpdateBatch(batch []*pb.Data) error {
 
 		res, err := database.es.Index("documents", strings.NewReader(string(serialized)), database.es.Index.WithDocumentID(data.Id))
 		if err != nil {
-			log.Printf("")
+			log.Printf("Error while inserting documents: %v", err)
 			return err
 		}
-		log.Println(res)
+
+		if res.IsError() {
+			log.Printf("Error while inserting documents: %v", res)
+			return errors.New("error while inserting documents")
+		}
 	}
 
 	return nil
@@ -165,7 +169,7 @@ func (database *Database) Retrieve(search string, size, from int) ([]interface{}
 	}
 
 	if res.IsError() {
-		log.Printf("Search query failed: %v", res)
+		log.Printf("Search query returned an error: %v", res)
 		return nil, err
 	}
 

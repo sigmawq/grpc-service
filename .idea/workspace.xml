@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7cbb1c0e-9fa7-4105-9861-3542fc747fb0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/grpc-service.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/grpc-service.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/sender.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/graph/sender.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/worker/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/worker/main.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../Program Files/Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2hglYFSyTA1n4Jg1cPGXTDcBeN2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build github.com/sigmawq/grpc-service/api.executor": "Debug",
+    "Go Build.go build github.com/sigmawq/grpc-service/service.executor": "Debug",
+    "Go Build.go build github.com/sigmawq/grpc-service/worker.executor": "Debug",
+    "Go Build.go build worker.executor": "Run",
+    "Go Build.go build worker/src.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "C:/project/grpc-service/api",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\project\grpc-service\service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\project\grpc-service\api\graph" />
+      <recent name="C:\project\grpc-service\api" />
+      <recent name="C:\project\grpc-service" />
+      <recent name="C:\project\grpc-service\graph-ql" />
+      <recent name="C:\project\grpc-service\service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build github.com/sigmawq/grpc-service/api">
+    <configuration name="go build github.com/sigmawq/grpc-service/api" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="grpc-service" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <package value="github.com/sigmawq/grpc-service" />
+      <directory value="$PROJECT_DIR$/api" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/sigmawq/grpc-service/service" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="grpc-service" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-buildvcs=false" />
+      <kind value="DIRECTORY" />
+      <package value="github.com/sigmawq/grpc-service" />
+      <directory value="$PROJECT_DIR$/service" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/sigmawq/grpc-service/worker" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="grpc-service" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-buildvcs=false" />
+      <parameters value="C:\project\grpc-service\data\data.json" />
+      <kind value="DIRECTORY" />
+      <package value="grpc-service" />
+      <directory value="$PROJECT_DIR$/worker" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build github.com/sigmawq/grpc-service/worker" />
+      <item itemvalue="Go Build.go build github.com/sigmawq/grpc-service/service" />
+      <item itemvalue="Go Build.go build github.com/sigmawq/grpc-service/api" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-266795519c66-911b893a1778-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-233.13135.104" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/api/graph/schema.resolvers.go</url>
+          <line>23</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="GoApplicationRunConfiguration">
+        <watch expression="*(*&quot;github.com/sigmawq/grpc-service/grpc.RetrieveRequest&quot;)(824634930816)" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/grpc_service$go_build_github_com_sigmawq_grpc_service_api.out" NAME="go build github.com/sigmawq/grpc-service/api Coverage Results" MODIFIED="1718119380758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

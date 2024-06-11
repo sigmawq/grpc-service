@@ -1,0 +1,17 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Test {
+  v: Boolean!
+}
+
+type Query {
+  dummy(b: Boolean!): Boolean!
+  retrieve(search: String!, from: Int!, size: Int!): String!
+  aggregate: String!
+}
+
+type Mutation {
+  dummy(b: Boolean!): Boolean!
+}

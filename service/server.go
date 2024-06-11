@@ -37,6 +37,8 @@ func NewServer(host string) (Server, error) {
 }
 
 func (server *Server) SendBatch(ctx context.Context, batch *pb.Batch) (*pb.BatchResponse, error) {
+	log.Printf("SendBatch: length %v", len(batch.Data))
+
 	err := database.UpdateBatch(batch.Data)
 	if err != nil {
 		return nil, err
@@ -44,6 +46,8 @@ func (server *Server) SendBatch(ctx context.Context, batch *pb.Batch) (*pb.Batch
 	return nil, nil
 }
 func (server *Server) Retrieve(ctx context.Context, request *pb.RetrieveRequest) (*pb.RetrieveResponse, error) {
+	log.Printf("Retrieve: from %v size %v search %v", request.From, request.Size, request.Search)
+
 	data, err := database.Retrieve(request.Search, int(request.Size), int(request.From))
 	if err != nil {
 		return &pb.RetrieveResponse{}, errors.New("failed to retrieve data")
@@ -62,6 +66,8 @@ func (server *Server) Retrieve(ctx context.Context, request *pb.RetrieveRequest)
 }
 
 func (server *Server) Aggregate(ctx context.Context, request *pb.AggregateRequest) (*pb.AggregateResponse, error) {
+	log.Println("Aggregate")
+
 	data, err := database.Aggregate()
 	if err != nil {
 		return &pb.AggregateResponse{}, errors.New("failed to retrieve data")

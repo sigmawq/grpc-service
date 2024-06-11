@@ -4,7 +4,7 @@ func main() {
 	path := "data/data.json"
 
 	rawBufferSize := 1 * 1024 * 1024
-	maxObjects := 5
+	maxObjects := 10000
 	parser, err := NewParserFromPath(path, rawBufferSize, maxObjects)
 	if err != nil {
 		return
