@@ -23,6 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GrpcClient interface {
 	SendBatch(ctx context.Context, in *Batch, opts ...grpc.CallOption) (*BatchResponse, error)
+	Retrieve(ctx context.Context, in *RetrieveRequest, opts ...grpc.CallOption) (*RetrieveResponse, error)
+	Aggregate(ctx context.Context, in *AggregateRequest, opts ...grpc.CallOption) (*AggregateResponse, error)
 }
 
 type grpcClient struct {
@@ -42,11 +44,31 @@ func (c *grpcClient) SendBatch(ctx context.Context, in *Batch, opts ...grpc.Call
 	return out, nil
 }
 
+func (c *grpcClient) Retrieve(ctx context.Context, in *RetrieveRequest, opts ...grpc.CallOption) (*RetrieveResponse, error) {
+	out := new(RetrieveResponse)
+	err := c.cc.Invoke(ctx, "/grpc.Grpc/Retrieve", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *grpcClient) Aggregate(ctx context.Context, in *AggregateRequest, opts ...grpc.CallOption) (*AggregateResponse, error) {
+	out := new(AggregateResponse)
+	err := c.cc.Invoke(ctx, "/grpc.Grpc/Aggregate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GrpcServer is the server API for Grpc service.
 // All implementations must embed UnimplementedGrpcServer
 // for forward compatibility
 type GrpcServer interface {
 	SendBatch(context.Context, *Batch) (*BatchResponse, error)
+	Retrieve(context.Context, *RetrieveRequest) (*RetrieveResponse, error)
+	Aggregate(context.Context, *AggregateRequest) (*AggregateResponse, error)
 	mustEmbedUnimplementedGrpcServer()
 }
 
@@ -56,6 +78,12 @@ type UnimplementedGrpcServer struct {
 
 func (UnimplementedGrpcServer) SendBatch(context.Context, *Batch) (*BatchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendBatch not implemented")
+}
+func (UnimplementedGrpcServer) Retrieve(context.Context, *RetrieveRequest) (*RetrieveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Retrieve not implemented")
+}
+func (UnimplementedGrpcServer) Aggregate(context.Context, *AggregateRequest) (*AggregateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Aggregate not implemented")
 }
 func (UnimplementedGrpcServer) mustEmbedUnimplementedGrpcServer() {}
 
@@ -88,6 +116,42 @@ func _Grpc_SendBatch_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Grpc_Retrieve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetrieveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GrpcServer).Retrieve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.Grpc/Retrieve",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GrpcServer).Retrieve(ctx, req.(*RetrieveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Grpc_Aggregate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AggregateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GrpcServer).Aggregate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.Grpc/Aggregate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GrpcServer).Aggregate(ctx, req.(*AggregateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Grpc_ServiceDesc is the grpc.ServiceDesc for Grpc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +162,14 @@ var Grpc_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendBatch",
 			Handler:    _Grpc_SendBatch_Handler,
+		},
+		{
+			MethodName: "Retrieve",
+			Handler:    _Grpc_Retrieve_Handler,
+		},
+		{
+			MethodName: "Aggregate",
+			Handler:    _Grpc_Aggregate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

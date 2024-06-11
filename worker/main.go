@@ -10,14 +10,18 @@ func main() {
 		return
 	}
 
-	sender := Sender{}
+	sender, err := NewSender("localhost:9000")
+	if err != nil {
+		return
+	}
+
 	for parser.More() {
 		err := parser.Parse()
 		if err != nil {
 			break
 		}
 
-		err = sender.Transmit(parser.Buffer, "localhost:9000")
+		err = sender.SendBatch(parser.Buffer)
 		if err != nil {
 			return
 		}

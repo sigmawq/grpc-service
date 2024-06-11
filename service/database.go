@@ -151,8 +151,6 @@ func (database *Database) Retrieve(search string, size, from int) ([]interface{}
     "from": %v
 }`, search, size, from)
 
-	result := make([]interface{}, 0)
-
 	res, err := database.es.Search(
 		database.es.Search.WithContext(context.Background()),
 		database.es.Search.WithIndex("documents"),
@@ -163,27 +161,24 @@ func (database *Database) Retrieve(search string, size, from int) ([]interface{}
 
 	if err != nil {
 		log.Printf("Search request failed: %v", res)
-		return result, err
+		return nil, err
 	}
 
 	if res.IsError() {
 		log.Printf("Search query failed: %v", res)
-		return result, err
+		return nil, err
 	}
 
 	var bodyResult map[string]interface{}
 	err = json.NewDecoder(res.Body).Decode(&bodyResult)
 	if err != nil {
 		log.Printf("Failed to decode search result: %v", err)
-		return result, err
+		return nil, err
 	}
 
 	values, _ := bodyResult["hits"].(map[string]interface{})["hits"].([]interface{})
-	for _, hit := range values {
-		values = append(result, hit)
-	}
 
-	return result, nil
+	return values, nil
 }
 
 func (database *Database) Aggregate() ([]interface{}, error) {
@@ -199,7 +194,6 @@ func (database *Database) Aggregate() ([]interface{}, error) {
    }
 }
 `
-	result := make([]interface{}, 0)
 
 	res, err := database.es.Search(
 		database.es.Search.WithContext(context.Background()),
@@ -211,25 +205,22 @@ func (database *Database) Aggregate() ([]interface{}, error) {
 
 	if err != nil {
 		log.Printf("Search request failed: %v", res)
-		return result, nil
+		return nil, nil
 	}
 
 	if res.IsError() {
 		log.Printf("Search query failed: %v", res)
-		return result, nil
+		return nil, nil
 	}
 
 	var bodyResult map[string]interface{}
 	err = json.NewDecoder(res.Body).Decode(&bodyResult)
 	if err != nil {
 		log.Printf("Failed to decode search result: %v", err)
-		return result, nil
+		return nil, nil
 	}
 
 	values, _ := bodyResult["aggregations"].(map[string]interface{})["aggregated"].(map[string]interface{})["buckets"].([]interface{})
-	for _, value := range values {
-		log.Println(value)
-	}
 
-	return result, nil
+	return values, nil
 }

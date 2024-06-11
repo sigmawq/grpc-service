@@ -6,6 +6,8 @@ package grpc;
 
 service Grpc {
   rpc SendBatch (Batch) returns (BatchResponse) {}
+  rpc Retrieve (RetrieveRequest) returns (RetrieveResponse) {}
+  rpc Aggregate (AggregateRequest) returns (AggregateResponse) {}
 }
 
 message Data {
@@ -22,3 +24,21 @@ message Batch {
 }
 
 message BatchResponse {}
+
+message RetrieveRequest {
+  string Search = 1;
+  int32 From = 2;
+  int32 Size = 3;
+}
+
+message RetrieveResponse {
+  bool Success = 1;
+  string Data = 2;
+}
+
+message AggregateRequest {}
+
+message AggregateResponse {
+  bool Success = 1;
+  string Data = 2;
+}

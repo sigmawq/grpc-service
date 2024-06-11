@@ -1,21 +1,23 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"os"
 )
 
-func main() {
-	data, err := os.Open("../data/data.json")
-	if err != nil {
-		log.Fatal("Failed to read data.json")
-	}
+var sender Sender
 
-	// jsonDataReader := strings.NewReader(jsonData)
-	// decoder := json.NewDecoder(jsonDataReader)
-	// var profile map[string]interface{}
-	// err := decoder.Decode(&profile)
-	// if err != nil {
-	//     panic(err)
-	// }
+func main() {
+	_sender, err := NewSender("localhost:9000")
+	if err != nil {
+		log.Printf("Failed to initialize sender: %v", err)
+		return
+	}
+	sender = _sender
+
+	resp1, err := sender.Retrieve("Ёлка", 0, 10)
+	resp2, err := sender.Aggregate()
+
+	fmt.Println(resp1, resp2)
+
 }

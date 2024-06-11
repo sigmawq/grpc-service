@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"encoding/json"
+	"errors"
 	pb "github.com/sigmawq/grpc-service/grpc"
 	"google.golang.org/grpc"
 	"log"
@@ -35,6 +37,44 @@ func NewServer(host string) (Server, error) {
 }
 
 func (server *Server) SendBatch(ctx context.Context, batch *pb.Batch) (*pb.BatchResponse, error) {
-	log.Printf("Receive batch length %v: %#v", len(batch.Data), batch)
+	err := database.UpdateBatch(batch.Data)
+	if err != nil {
+		return nil, err
+	}
 	return nil, nil
+}
+func (server *Server) Retrieve(ctx context.Context, request *pb.RetrieveRequest) (*pb.RetrieveResponse, error) {
+	data, err := database.Retrieve(request.Search, int(request.Size), int(request.From))
+	if err != nil {
+		return &pb.RetrieveResponse{}, errors.New("failed to retrieve data")
+	}
+
+	serialized, err := json.Marshal(data)
+	if err != nil {
+		return &pb.RetrieveResponse{}, errors.New("failed to retrieve data (serialization error)")
+	}
+
+	response := &pb.RetrieveResponse{
+		Data:    string(serialized),
+		Success: true,
+	}
+	return response, nil
+}
+
+func (server *Server) Aggregate(ctx context.Context, request *pb.AggregateRequest) (*pb.AggregateResponse, error) {
+	data, err := database.Aggregate()
+	if err != nil {
+		return &pb.AggregateResponse{}, errors.New("failed to retrieve data")
+	}
+
+	serialized, err := json.Marshal(data)
+	if err != nil {
+		return &pb.AggregateResponse{}, errors.New("failed to retrieve data (serialization error)")
+	}
+
+	response := &pb.AggregateResponse{
+		Data:    string(serialized),
+		Success: true,
+	}
+	return response, nil
 }
