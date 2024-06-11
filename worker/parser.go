@@ -3,52 +3,66 @@ package main
 import (
 	"bufio"
 	"encoding/json"
-	pb "github.com/sigmawq/grpc-service/grpc"
+	"github.com/sigmawq/grpc-service/shared"
+	"io"
 	"log"
 	"os"
 )
 
 type Parser struct {
-	Buffer []DataEntry
+	file       io.Reader
+	decoder    *json.Decoder
+	maxObjects int
+	hasMore    bool
+	Buffer     []shared.DataEntry
 }
 
-type DataEntry struct {
-	Id         string `json:"_id"`
-	Categories struct {
-		Subcategory string `json:"subcategory"`
-	} `json:"categories"`
-	Title struct {
-		Ro string `json:"ro"`
-		Ru string `json:"ru"`
-	} `json:"title"`
-	Type   string  `json:"type"`
-	Posted float64 `json:"posted"`
-}
+func NewParserFromPath(path string, rawBufferSize, maxObjects int) (Parser, error) {
+	parser := Parser{}
 
-func (de *DataEntry) ToGrpcFormat() *pb.Data {
-	return &pb.Data{
-		Id:          de.Id,
-		Subcategory: de.Categories.Subcategory,
-		TitleRo:     de.Title.Ro,
-		TitleRu:     de.Title.Ru,
-		Type:        de.Type,
-		Posted:      de.Posted,
-	}
-}
-
-func (parser *Parser) ParseFromPath(path string, rawBufferSize, maxObjects int) error {
 	data, err := os.Open(path)
 	if err != nil {
-		log.Fatal("Failed to read data.json")
+		log.Printf("Failed to read data: %v", err)
+		return parser, err
 	}
 
-	reader := bufio.NewReaderSize(data, rawBufferSize)
+	parser.file = bufio.NewReaderSize(data, rawBufferSize)
+	parser.decoder = json.NewDecoder(parser.file)
+	parser.maxObjects = maxObjects
+	parser.hasMore = true
 
-	parser.Buffer = make([]DataEntry, 0)
+	err = parser.ConsumeFirst()
+	if err != nil {
+		log.Printf("Failed to consume initial array bracket, data source is likely in an invalid format: %v", err)
+		return parser, err
+	}
 
-	decoder := json.NewDecoder(reader)
+	return parser, nil
+}
 
-	token, err := decoder.Token()
+func (parser *Parser) Parse() error {
+	parser.Buffer = make([]shared.DataEntry, 0)
+
+	var object shared.DataEntry
+	for parser.decoder.More() {
+		err := parser.decoder.Decode(&object)
+		if err != nil {
+			log.Printf("Error while decoding, %v", err)
+			return err
+		}
+
+		parser.Buffer = append(parser.Buffer, object)
+		if len(parser.Buffer) >= parser.maxObjects {
+			return nil
+		}
+	}
+
+	parser.hasMore = false
+	return nil
+}
+
+func (parser *Parser) ConsumeFirst() error {
+	token, err := parser.decoder.Token()
 	if err != nil {
 		log.Printf("%v", err)
 		return err
@@ -60,24 +74,9 @@ func (parser *Parser) ParseFromPath(path string, rawBufferSize, maxObjects int) 
 		return err
 	}
 
-	var object DataEntry
-	for decoder.More() {
-		if err != nil {
-			log.Printf("%v", err)
-			break
-		}
-
-		err = decoder.Decode(&object)
-		if err != nil {
-			log.Printf("Error while decoding, %v", err)
-			return err
-		}
-
-		parser.Buffer = append(parser.Buffer, object)
-		if len(parser.Buffer) > maxObjects {
-			return nil
-		}
-	}
-
 	return nil
+}
+
+func (parser *Parser) More() bool {
+	return parser.hasMore
 }
