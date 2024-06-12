@@ -1,5 +1,8 @@
-# GRPC Service
+# Short overview
 A three component service that fetches data from a file, stores it in elastic search and exposes it though an API using GraphQL.
+`worker` is responsible for fetching data and sending it to `service` over GRPC.
+`service` is responsible for handling data update requests from `worker` and data fetch requests from `api`. 
+`api` provides visualization for this data using GraphQL.
 
 # Run using Docker
 To build and deploy every service except `worker` run:
