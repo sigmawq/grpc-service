@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7cbb1c0e-9fa7-4105-9861-3542fc747fb0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/graph/schema.resolvers.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/graph/schema.resolvers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/database.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worker/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/worker/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +27,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -40,7 +43,7 @@
     "DefaultGoTemplateProperty": "Go File",
     "Go Build.go build github.com/sigmawq/grpc-service/api.executor": "Debug",
     "Go Build.go build github.com/sigmawq/grpc-service/service.executor": "Debug",
-    "Go Build.go build github.com/sigmawq/grpc-service/worker.executor": "Debug",
+    "Go Build.go build github.com/sigmawq/grpc-service/worker.executor": "Run",
     "Go Build.go build worker.executor": "Run",
     "Go Build.go build worker/src.executor": "Debug",
     "Go Test.go test grpc-service.executor": "Run",
@@ -73,7 +76,7 @@
       <recent name="C:\project\grpc-service\graph-ql" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build github.com/sigmawq/grpc-service/worker">
+  <component name="RunManager" selected="Go Build.go build github.com/sigmawq/grpc-service/service">
     <configuration name="go build github.com/sigmawq/grpc-service/api" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="grpc-service" />
       <working_directory value="$PROJECT_DIR$" />
@@ -165,7 +168,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/api/graph/schema.resolvers.go</url>
-          <line>20</line>
+          <line>19</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
@@ -175,13 +178,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/service/database.go</url>
-          <line>207</line>
+          <line>208</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/worker/main.go</url>
           <line>49</line>
           <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/service/server.go</url>
+          <line>69</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

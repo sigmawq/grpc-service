@@ -10,12 +10,12 @@ var db Database
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = ":9500"
+		port = "9000"
 	}
 
 	elasticHost := os.Getenv("ELASTIC_HOST")
 	if elasticHost == "" {
-		elasticHost = "http://localhost:9500"
+		elasticHost = "http://localhost:9200"
 	}
 
 	log.Printf("PORT=%v, ELASTIC_HOST=%v", port, elasticHost)

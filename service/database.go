@@ -185,7 +185,8 @@ func (database *Database) Retrieve(search string, size, from int) ([]*shared.Dat
 
 	result := make([]*shared.DataEntryDatabase, 0, len(response.Hits.Hits))
 	for _, value := range response.Hits.Hits {
-		result = append(result, &value.Source)
+		value := value.Source
+		result = append(result, &value)
 	}
 
 	return result, nil

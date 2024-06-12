@@ -18,7 +18,7 @@ func main() {
 
 	serviceHost := os.Getenv("SERVICE_HOST")
 	if serviceHost == "" {
-		serviceHost = "http://localhost:9000"
+		serviceHost = "localhost:9000"
 	}
 
 	log.Printf("PORT=%v, SERVICE_HOST=%v", port, serviceHost)
