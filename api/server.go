@@ -25,8 +25,7 @@ func main() {
 
 	err := graph.InitializeGraphQLClient(serviceHost)
 	if err != nil {
-
-		return
+		os.Exit(1)
 	}
 
 	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))

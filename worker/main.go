@@ -39,17 +39,19 @@ func main() {
 	maxObjects := 10000
 	parser, err := NewParserFromPath(dataSource, bufferSize, maxObjects)
 	if err != nil {
-		return
+		os.Exit(1)
 	}
 
 	client, err := shared.NewClientFromHost(serviceHost)
 	if err != nil {
-		return
+		os.Exit(1)
 	}
 
 	err = ParseAndSend(&parser, &client)
 	if err != nil {
 		log.Printf("Worker failed to parse and send data: %v", err)
-		return
+		os.Exit(1)
 	}
+
+	log.Print("done!")
 }

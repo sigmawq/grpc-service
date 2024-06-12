@@ -1,0 +1,16 @@
+services:
+  worker:
+    build:
+      context: ./
+      dockerfile: ./worker/Dockerfile
+    environment:
+      DATA_SOURCE: "data/data.json"
+      SERVICE_HOST: "service:9000"
+    networks:
+      - shared-net
+networks:
+  shared-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.27.0/24

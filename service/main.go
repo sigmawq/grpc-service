@@ -22,12 +22,12 @@ func main() {
 
 	_db, err := NewDatabase(elasticHost)
 	if err != nil {
-		return
+		os.Exit(1)
 	}
 	db = _db
 
 	_, err = NewServer(":" + port)
 	if err != nil {
-		return
+		os.Exit(1)
 	}
 }

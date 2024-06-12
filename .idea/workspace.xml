@@ -6,14 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7cbb1c0e-9fa7-4105-9861-3542fc747fb0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/graph/resolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/graph/resolver.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/graph/schema.resolvers.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/graph/schema.resolvers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worker/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/worker/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worker/parser.go" beforeDir="false" afterPath="$PROJECT_DIR$/worker/parser.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +51,7 @@
     "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/project/grpc-service/worker",
+    "last_opened_file_path": "C:/project/grpc-service",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -64,6 +60,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\project\grpc-service" />
       <recent name="C:\project\grpc-service\worker" />
       <recent name="C:\project\grpc-service\api" />
       <recent name="C:\project\grpc-service\service" />

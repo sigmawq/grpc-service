@@ -16,7 +16,11 @@ services:
       ELASTIC_HOST: "http://elasticsearch:9200"
     depends_on:
       - elasticsearch
-    restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 120s
     networks:
       - shared-net
   api:
