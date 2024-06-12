@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/sigmawq/grpc-service/shared"
 	"log"
+	"os"
 )
 
 func ParseAndSend(parser *Parser, client *shared.Client) error {
@@ -22,16 +23,26 @@ func ParseAndSend(parser *Parser, client *shared.Client) error {
 }
 
 func main() {
-	path := "data/data.json"
+	dataSource := os.Getenv("DATA_SOURCE")
+	if dataSource == "" {
+		dataSource = "data/data.json"
+	}
+
+	serviceHost := os.Getenv("SERVICE_HOST")
+	if serviceHost == "" {
+		serviceHost = "localhost:9000"
+	}
+
+	log.Printf("DATA_SOURCE=%v, SERVICE_HOST=%v", dataSource, serviceHost)
 
 	bufferSize := 1 * 1024 * 1024
 	maxObjects := 10000
-	parser, err := NewParserFromPath(path, bufferSize, maxObjects)
+	parser, err := NewParserFromPath(dataSource, bufferSize, maxObjects)
 	if err != nil {
 		return
 	}
 
-	client, err := shared.NewClientFromHost("localhost:9000")
+	client, err := shared.NewClientFromHost(serviceHost)
 	if err != nil {
 		return
 	}

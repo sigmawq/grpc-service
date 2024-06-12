@@ -6,22 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="7cbb1c0e-9fa7-4105-9861-3542fc747fb0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/graph/generated.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/graph/generated.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/graph/model/models_gen.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/graph/model/models_gen.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/graph/resolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/graph/resolver.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/graph/schema.graphqls" beforeDir="false" afterPath="$PROJECT_DIR$/api/graph/schema.graphqls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/graph/schema.resolvers.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/graph/schema.resolvers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/graph/sender.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/api/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc/grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/grpc/grpc.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc/grpc.proto" beforeDir="false" afterPath="$PROJECT_DIR$/grpc/grpc.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/database.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/shared.go" beforeDir="false" afterPath="$PROJECT_DIR$/shared/shared.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worker/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/worker/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worker/parser.go" beforeDir="false" afterPath="$PROJECT_DIR$/worker/parser.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worker/sender.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +44,7 @@
     "DefaultGoTemplateProperty": "Go File",
     "Go Build.go build github.com/sigmawq/grpc-service/api.executor": "Debug",
     "Go Build.go build github.com/sigmawq/grpc-service/service.executor": "Debug",
-    "Go Build.go build github.com/sigmawq/grpc-service/worker.executor": "Run",
+    "Go Build.go build github.com/sigmawq/grpc-service/worker.executor": "Debug",
     "Go Build.go build worker.executor": "Run",
     "Go Build.go build worker/src.executor": "Debug",
     "Go Test.go test grpc-service.executor": "Run",
@@ -63,7 +55,7 @@
     "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/project/grpc-service/api",
+    "last_opened_file_path": "C:/project/grpc-service/worker",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -72,20 +64,26 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\project\grpc-service\worker" />
+      <recent name="C:\project\grpc-service\api" />
       <recent name="C:\project\grpc-service\service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\project\grpc-service\service" />
+      <recent name="C:\project\grpc-service" />
       <recent name="C:\project\grpc-service\api\graph" />
       <recent name="C:\project\grpc-service\api" />
-      <recent name="C:\project\grpc-service" />
       <recent name="C:\project\grpc-service\graph-ql" />
-      <recent name="C:\project\grpc-service\service" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build github.com/sigmawq/grpc-service/service">
+  <component name="RunManager" selected="Go Build.go build github.com/sigmawq/grpc-service/worker">
     <configuration name="go build github.com/sigmawq/grpc-service/api" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="grpc-service" />
       <working_directory value="$PROJECT_DIR$" />
+      <envs>
+        <env name="SERVICE_HOST" value="localhost:9000" />
+        <env name="PORT" value="8085" />
+      </envs>
       <kind value="DIRECTORY" />
       <package value="github.com/sigmawq/grpc-service" />
       <directory value="$PROJECT_DIR$/api" />
@@ -160,12 +158,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/service/main.go</url>
-          <line>5</line>
+          <line>22</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/service/database.go</url>
-          <line>180</line>
+          <line>178</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
@@ -180,8 +178,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/service/database.go</url>
-          <line>209</line>
+          <line>207</line>
           <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/worker/main.go</url>
+          <line>49</line>
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -10,18 +10,23 @@ import (
 	"github.com/sigmawq/grpc-service/api/graph"
 )
 
-const defaultPort = "8080"
-
 func main() {
-	err := graph.InitializeGraphQLClient()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	serviceHost := os.Getenv("SERVICE_HOST")
+	if serviceHost == "" {
+		serviceHost = "http://localhost:9000"
+	}
+
+	log.Printf("PORT=%v, SERVICE_HOST=%v", port, serviceHost)
+
+	err := graph.InitializeGraphQLClient(serviceHost)
 	if err != nil {
 
 		return
-	}
-
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
 	}
 
 	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))

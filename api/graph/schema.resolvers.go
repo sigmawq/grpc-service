@@ -7,8 +7,8 @@ package graph
 import (
 	"context"
 	"fmt"
-
 	"github.com/sigmawq/grpc-service/api/graph/model"
+	"log"
 )
 
 // Dummy is the resolver for the dummy field.
@@ -44,6 +44,8 @@ func (r *queryResolver) Retrieve(ctx context.Context, search string, from int, s
 func (r *queryResolver) Aggregate(ctx context.Context) ([]*model.AggregationCategory, error) {
 	data, err := client.Aggregate()
 	if err != nil {
+		//TODO:
+		log.Printf("Aggregate failed: %v", err)
 		return nil, err
 	}
 

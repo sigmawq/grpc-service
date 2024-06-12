@@ -1,0 +1,41 @@
+services:
+  elasticsearch:
+    image: bitnami/elasticsearch:latest
+    ports:
+      - "9200:9200"
+    networks:
+      - shared-net
+  service:
+    build:
+      context: ./
+      dockerfile: ./service/Dockerfile
+    ports:
+      - "9000:9000"
+    environment:
+      PORT: "9000"
+      ELASTIC_HOST: "http://elasticsearch:9200"
+    depends_on:
+      - elasticsearch
+    restart: always
+    networks:
+      - shared-net
+  api:
+    build:
+      context: ./
+      dockerfile: ./api/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      SERVICE_HOST: "service:9000"
+    depends_on:
+      - service
+      - elasticsearch
+    networks:
+      - shared-net
+networks:
+  shared-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.27.0/24

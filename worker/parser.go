@@ -35,7 +35,7 @@ func NewParserFromReader(reader io.Reader, bufferSize, maxObjects int) (Parser, 
 	parser.maxObjects = maxObjects
 	parser.hasMore = true
 
-	err := parser.ConsumeFirst()
+	err := parser.consumeFirst()
 	if err != nil {
 		log.Printf("Failed to consume initial array bracket, data source is likely in an invalid format: %v", err)
 		return parser, err
@@ -65,7 +65,7 @@ func (parser *Parser) Parse() error {
 	return nil
 }
 
-func (parser *Parser) ConsumeFirst() error {
+func (parser *Parser) consumeFirst() error {
 	token, err := parser.decoder.Token()
 	if err != nil {
 		log.Printf("%v", err)

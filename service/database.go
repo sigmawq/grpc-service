@@ -135,8 +135,6 @@ func (database *Database) UpdateBatch(batch []*pb.Data) error {
 }
 
 func (database *Database) Retrieve(search string, size, from int) ([]*shared.DataEntryDatabase, error) {
-	// TODO: Erase diacritics
-
 	query := fmt.Sprintf(`
 {
     "query": {

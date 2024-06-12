@@ -11,8 +11,8 @@ import (
 
 var client shared.Client
 
-func InitializeGraphQLClient() error {
-	_client, err := shared.NewClientFromHost("localhost:9000")
+func InitializeGraphQLClient(serviceHost string) error {
+	_client, err := shared.NewClientFromHost(serviceHost)
 	if err != nil {
 		fmt.Printf("Failed to initialize sender: %v", err)
 		return err
