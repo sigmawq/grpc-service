@@ -55,7 +55,7 @@ Correct initialization is required the first time to aggregate and do full text 
 1. We are defining a mapping on `subcategory` field to do full text search. (elasticsearch doesn't allow full text search on text fields by default)
 2. We are defining an analyzer to correctly handle lowercase and diacritics when performing search.
 
-# Important details on GRPC and GraphQL
+## Important details on GRPC and GraphQL
 If you are going to change GraphQL or GRPC schemas then the corresponding code generation commands will need to be run
 GRPC:
 ```
