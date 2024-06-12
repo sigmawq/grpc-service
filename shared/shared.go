@@ -17,8 +17,8 @@ type DataEntry struct {
 	Posted float64 `json:"posted"`
 }
 
-func (de *DataEntry) ToGrpcFormat() *pb.Data {
-	return &pb.Data{
+func (de *DataEntry) ToGrpcFormat() pb.Data {
+	return pb.Data{
 		Id:          de.Id,
 		Subcategory: de.Categories.Subcategory,
 		TitleRo:     de.Title.Ro,
@@ -37,6 +37,17 @@ type DataEntryDatabase struct {
 	Posted      float64 `json:"posted"`
 }
 
+func (de *DataEntryDatabase) ToGrpcFormat() pb.Data {
+	return pb.Data{
+		Id:          de.Id,
+		Subcategory: de.Subcategory,
+		TitleRo:     de.TitleRo,
+		TitleRu:     de.TitleRu,
+		Type:        de.Type,
+		Posted:      de.Posted,
+	}
+}
+
 func NewDataEntryFromGrpcFormat(src *pb.Data) DataEntryDatabase {
 	data := DataEntryDatabase{
 		Id:          src.Id,
@@ -48,4 +59,16 @@ func NewDataEntryFromGrpcFormat(src *pb.Data) DataEntryDatabase {
 	}
 
 	return data
+}
+
+type AggregationCategory struct {
+	DocCount int32  `json:"doc_count"`
+	Key      string `json:"key"`
+}
+
+func (ac *AggregationCategory) ToGrpcFormat() pb.AggregationCategory {
+	return pb.AggregationCategory{
+		DocCount: ac.DocCount,
+		Key:      ac.Key,
+	}
 }

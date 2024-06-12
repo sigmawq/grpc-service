@@ -2,14 +2,23 @@
 #
 # https://gqlgen.com/getting-started/
 
-type Test {
-  v: Boolean!
+type AggregationCategory {
+  DocCount: Int!,
+  Key: String!,
+}
+
+type Data {
+  Id: String!,
+  Subcategory: String!,
+  TitleRo: String!,
+  TitleRu: String!,
+  Type: String!,
+  Posted: Float!,
 }
 
 type Query {
-  dummy(b: Boolean!): Boolean!
-  retrieve(search: String!, from: Int!, size: Int!): String!
-  aggregate: String!
+  retrieve(search: String!, from: Int!, size: Int!): [Data!]!
+  aggregate: [AggregationCategory!]!
 }
 
 type Mutation {

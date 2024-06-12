@@ -17,12 +17,12 @@ type Database struct {
 	es *elasticsearch.Client
 }
 
-func NewDatabase() (Database, error) {
+func NewDatabase(databaseHost string) (Database, error) {
 	database := Database{}
 
 	cfg := elasticsearch.Config{
 		Addresses: []string{
-			"http://localhost:9500",
+			databaseHost,
 		},
 	}
 	es, err := elasticsearch.NewClient(cfg)
@@ -32,41 +32,38 @@ func NewDatabase() (Database, error) {
 
 	database.es = es
 
-	err = database.allowAggregationOnSubcategoryField()
+	err = database.setupDatabaseIndex()
 	if err != nil {
 		return database, err
 	}
 
-	//ind, err := es.Indices.Create("documents")
-	//if err != nil {
-	//	return database, err
-	//}
-	//log.Println(ind)
-	//
-	//res, err := es.Index("documents", strings.NewReader(`{"title" : "Test"}`), es.Index.WithDocumentID("1"))
-	//log.Println(res)
-	//
-	//res, err = es.Get("documents", "1")
-	//
-	//res.
-	//
-	//buffer, err := io.ReadAll(res.Body)
-	//log.Println(buffer)
-
 	return database, nil
 }
 
-func (database *Database) allowAggregationOnSubcategoryField() error {
+func (database *Database) setupDatabaseIndex() error {
 	query := `
 {
-"mappings": {
+	"settings": {
+        "analysis": {
+            "analyzer": {
+                "default": {
+                    "type": "custom",
+                    "tokenizer": "standard",
+                    "filter": [
+                        "lowercase",
+                        "asciifolding"
+                    ]
+                }
+            }
+        }
+  },
+	"mappings": {
 	    "properties": {
 	      "subcategory": {
 	        "type": "text",
 	        "fielddata": true
 	      }
 	    }
-	  }
 	}
 }`
 
@@ -137,7 +134,7 @@ func (database *Database) UpdateBatch(batch []*pb.Data) error {
 	return nil
 }
 
-func (database *Database) Retrieve(search string, size, from int) ([]interface{}, error) {
+func (database *Database) Retrieve(search string, size, from int) ([]*shared.DataEntryDatabase, error) {
 	// TODO: Erase diacritics
 
 	query := fmt.Sprintf(`
@@ -173,19 +170,30 @@ func (database *Database) Retrieve(search string, size, from int) ([]interface{}
 		return nil, err
 	}
 
-	var bodyResult map[string]interface{}
-	err = json.NewDecoder(res.Body).Decode(&bodyResult)
+	type Response struct {
+		Hits struct {
+			Hits []struct {
+				Source shared.DataEntryDatabase `json:"_source"`
+			} `json:"hits"`
+		} `json:"hits"`
+	}
+
+	var response Response
+	err = json.NewDecoder(res.Body).Decode(&response)
 	if err != nil {
 		log.Printf("Failed to decode search result: %v", err)
 		return nil, err
 	}
 
-	values, _ := bodyResult["hits"].(map[string]interface{})["hits"].([]interface{})
+	result := make([]*shared.DataEntryDatabase, 0, len(response.Hits.Hits))
+	for _, value := range response.Hits.Hits {
+		result = append(result, &value.Source)
+	}
 
-	return values, nil
+	return result, nil
 }
 
-func (database *Database) Aggregate() ([]interface{}, error) {
+func (database *Database) Aggregate() ([]*shared.AggregationCategory, error) {
 	query := `
 {
    "size": 0, 
@@ -217,14 +225,26 @@ func (database *Database) Aggregate() ([]interface{}, error) {
 		return nil, nil
 	}
 
-	var bodyResult map[string]interface{}
-	err = json.NewDecoder(res.Body).Decode(&bodyResult)
+	type Response struct {
+		Aggregations struct {
+			Aggregated struct {
+				Buckets []shared.AggregationCategory `json:"buckets"`
+			} `json:"aggregated"`
+		} `json:"aggregations"`
+	}
+
+	var response Response
+	err = json.NewDecoder(res.Body).Decode(&response)
 	if err != nil {
 		log.Printf("Failed to decode search result: %v", err)
 		return nil, nil
 	}
 
-	values, _ := bodyResult["aggregations"].(map[string]interface{})["aggregated"].(map[string]interface{})["buckets"].([]interface{})
+	result := make([]*shared.AggregationCategory, 0, len(response.Aggregations.Aggregated.Buckets))
+	for _, value := range response.Aggregations.Aggregated.Buckets {
+		value := value
+		result = append(result, &value)
+	}
 
-	return values, nil
+	return result, nil
 }

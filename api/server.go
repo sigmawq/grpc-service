@@ -13,7 +13,7 @@ import (
 const defaultPort = "8080"
 
 func main() {
-	err := graph.InitializeGraphQLSender()
+	err := graph.InitializeGraphQLClient()
 	if err != nil {
 
 		return

@@ -17,21 +17,25 @@ type Parser struct {
 	Buffer     []shared.DataEntry
 }
 
-func NewParserFromPath(path string, rawBufferSize, maxObjects int) (Parser, error) {
-	parser := Parser{}
-
+func NewParserFromPath(path string, bufferSize, maxObjects int) (Parser, error) {
 	data, err := os.Open(path)
 	if err != nil {
 		log.Printf("Failed to read data: %v", err)
-		return parser, err
+		return Parser{}, err
 	}
 
-	parser.file = bufio.NewReaderSize(data, rawBufferSize)
+	return NewParserFromReader(data, bufferSize, maxObjects)
+}
+
+func NewParserFromReader(reader io.Reader, bufferSize, maxObjects int) (Parser, error) {
+	parser := Parser{}
+
+	parser.file = bufio.NewReaderSize(reader, bufferSize)
 	parser.decoder = json.NewDecoder(parser.file)
 	parser.maxObjects = maxObjects
 	parser.hasMore = true
 
-	err = parser.ConsumeFirst()
+	err := parser.ConsumeFirst()
 	if err != nil {
 		log.Printf("Failed to consume initial array bracket, data source is likely in an invalid format: %v", err)
 		return parser, err

@@ -1,13 +1,13 @@
 package main
 
-var database Database
+var db Database
 
 func main() {
-	_database, err := NewDatabase()
+	_db, err := NewDatabase("http://localhost:9500")
 	if err != nil {
 		return
 	}
-	database = _database
+	db = _db
 
 	_, err = NewServer("localhost:9000")
 	if err != nil {

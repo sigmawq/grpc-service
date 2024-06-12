@@ -2,12 +2,22 @@
 
 package model
 
+type AggregationCategory struct {
+	DocCount int    `json:"DocCount"`
+	Key      string `json:"Key"`
+}
+
+type Data struct {
+	ID          string  `json:"Id"`
+	Subcategory string  `json:"Subcategory"`
+	TitleRo     string  `json:"TitleRo"`
+	TitleRu     string  `json:"TitleRu"`
+	Type        string  `json:"Type"`
+	Posted      float64 `json:"Posted"`
+}
+
 type Mutation struct {
 }
 
 type Query struct {
-}
-
-type Test struct {
-	V bool `json:"v"`
 }

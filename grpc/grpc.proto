@@ -33,12 +33,17 @@ message RetrieveRequest {
 
 message RetrieveResponse {
   bool Success = 1;
-  string Data = 2;
+  repeated Data data = 2;
 }
 
 message AggregateRequest {}
 
+message AggregationCategory {
+  int32 DocCount = 1;
+  string Key = 2;
+}
+
 message AggregateResponse {
   bool Success = 1;
-  string Data = 2;
+  repeated AggregationCategory Data = 2;
 }

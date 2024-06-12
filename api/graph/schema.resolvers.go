@@ -7,6 +7,8 @@ package graph
 import (
 	"context"
 	"fmt"
+
+	"github.com/sigmawq/grpc-service/api/graph/model"
 )
 
 // Dummy is the resolver for the dummy field.
@@ -14,19 +16,48 @@ func (r *mutationResolver) Dummy(ctx context.Context, b bool) (bool, error) {
 	panic(fmt.Errorf("not implemented: Dummy - dummy"))
 }
 
-// Dummy is the resolver for the dummy field.
-func (r *queryResolver) Dummy(ctx context.Context, b bool) (bool, error) {
-	panic(fmt.Errorf("not implemented: Dummy - dummy"))
-}
-
 // Retrieve is the resolver for the retrieve field.
-func (r *queryResolver) Retrieve(ctx context.Context, search string, from int, size int) (string, error) {
-	return sender.Retrieve(search, int32(from), int32(size))
+func (r *queryResolver) Retrieve(ctx context.Context, search string, from int, size int) ([]*model.Data, error) {
+	data, err := client.Retrieve(search, int32(from), int32(size))
+	if err != nil {
+		return nil, err
+	}
+
+	result := make([]*model.Data, 0)
+	for _, value := range data {
+		value := model.Data{
+			ID:          value.Id,
+			Subcategory: value.Subcategory,
+			TitleRo:     value.TitleRo,
+			TitleRu:     value.TitleRu,
+			Type:        value.Type,
+			Posted:      value.Posted,
+		}
+
+		result = append(result, &value)
+	}
+
+	return result, nil
 }
 
 // Aggregate is the resolver for the aggregate field.
-func (r *queryResolver) Aggregate(ctx context.Context) (string, error) {
-	return sender.Aggregate()
+func (r *queryResolver) Aggregate(ctx context.Context) ([]*model.AggregationCategory, error) {
+	data, err := client.Aggregate()
+	if err != nil {
+		return nil, err
+	}
+
+	result := make([]*model.AggregationCategory, 0)
+	for _, value := range data {
+		value := model.AggregationCategory{
+			DocCount: int(value.DocCount),
+			Key:      value.Key,
+		}
+
+		result = append(result, &value)
+	}
+
+	return result, nil
 }
 
 // Mutation returns MutationResolver implementation.

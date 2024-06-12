@@ -1,20 +1,23 @@
 package graph
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/sigmawq/grpc-service/shared"
+)
 
 // This file will not be regenerated automatically.
 //
 // It serves as dependency injection for your app, add any dependencies you require here.
 
-var sender Sender
+var client shared.Client
 
-func InitializeGraphQLSender() error {
-	_sender, err := NewSender("localhost:9000")
+func InitializeGraphQLClient() error {
+	_client, err := shared.NewClientFromHost("localhost:9000")
 	if err != nil {
 		fmt.Printf("Failed to initialize sender: %v", err)
 		return err
 	}
-	sender = _sender
+	client = _client
 
 	return err
 }

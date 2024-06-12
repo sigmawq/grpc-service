@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	pb "github.com/sigmawq/grpc-service/grpc"
 	"google.golang.org/grpc"
@@ -39,7 +38,7 @@ func NewServer(host string) (Server, error) {
 func (server *Server) SendBatch(ctx context.Context, batch *pb.Batch) (*pb.BatchResponse, error) {
 	log.Printf("SendBatch: length %v", len(batch.Data))
 
-	err := database.UpdateBatch(batch.Data)
+	err := db.UpdateBatch(batch.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -48,18 +47,20 @@ func (server *Server) SendBatch(ctx context.Context, batch *pb.Batch) (*pb.Batch
 func (server *Server) Retrieve(ctx context.Context, request *pb.RetrieveRequest) (*pb.RetrieveResponse, error) {
 	log.Printf("Retrieve: from %v size %v search %v", request.From, request.Size, request.Search)
 
-	data, err := database.Retrieve(request.Search, int(request.Size), int(request.From))
+	data, err := db.Retrieve(request.Search, int(request.Size), int(request.From))
 	if err != nil {
 		return &pb.RetrieveResponse{}, errors.New("failed to retrieve data")
 	}
 
-	serialized, err := json.Marshal(data)
-	if err != nil {
-		return &pb.RetrieveResponse{}, errors.New("failed to retrieve data (serialization error)")
+	// NOTE: Not ideal, but type annotations on GRPC generated structs are upper case, so we can't use them to deserialize elasticsearch. There is probably a better that would avoid this wasting conversion.
+	dataConverted := make([]*pb.Data, 0, len(data))
+	for _, value := range data {
+		value := value.ToGrpcFormat()
+		dataConverted = append(dataConverted, &value)
 	}
 
 	response := &pb.RetrieveResponse{
-		Data:    string(serialized),
+		Data:    dataConverted,
 		Success: true,
 	}
 	return response, nil
@@ -68,18 +69,19 @@ func (server *Server) Retrieve(ctx context.Context, request *pb.RetrieveRequest)
 func (server *Server) Aggregate(ctx context.Context, request *pb.AggregateRequest) (*pb.AggregateResponse, error) {
 	log.Println("Aggregate")
 
-	data, err := database.Aggregate()
+	data, err := db.Aggregate()
 	if err != nil {
 		return &pb.AggregateResponse{}, errors.New("failed to retrieve data")
 	}
 
-	serialized, err := json.Marshal(data)
-	if err != nil {
-		return &pb.AggregateResponse{}, errors.New("failed to retrieve data (serialization error)")
+	dataConverted := make([]*pb.AggregationCategory, 0, len(data))
+	for _, value := range data {
+		value := value.ToGrpcFormat()
+		dataConverted = append(dataConverted, &value)
 	}
 
 	response := &pb.AggregateResponse{
-		Data:    string(serialized),
+		Data:    dataConverted,
 		Success: true,
 	}
 	return response, nil
