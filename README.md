@@ -10,7 +10,7 @@ To build and deploy every service except `worker` run:
 docker compose up --build
 ```
 Wait until every service is initialized (elasticsearch can take some time)
-Once every service from the list above finished initializing the following to build and run `worker`.
+Once every service from the list above finished initializing execute the following to build and run `worker`.
 ```
 docker compose -f worker-compose.yaml up --build
 ```
