@@ -12,7 +12,7 @@ docker compose up --build
 Wait until every service is initialized (elasticsearch can take some time)
 Once every service from the list above finished initializing the following to build and run `worker`.
 ```
-docker compose -f worker-compose.yaml --build
+docker compose -f worker-compose.yaml up --build
 ```
 It will do it's job and quickly exit.
 
